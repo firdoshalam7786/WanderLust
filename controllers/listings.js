@@ -1,5 +1,14 @@
 const Listing = require("../models/listing.js");
 
+// Map getCoordinates 
+const getCoordinates = async (location, country) => {  
+  const response = await fetch(
+    `https://api.geoapify.com/v1/geocode/search?text=${location},${country}&apiKey=${process.env.MAP_TOKEN}`
+  );
+  const data = await response.json();
+  return data.features[0].geometry;
+};
+
 // index controller
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({});
@@ -32,6 +41,11 @@ module.exports.createListing = async (req, res, next) => {
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
   newListing.image = { url, filename };
+  //location
+  newListing.geometry = await getCoordinates(
+    newListing.location,
+    newListing.country
+  );
   await newListing.save();
   req.flash("success", "New Listing Created!");
   res.redirect("/listings");
@@ -54,6 +68,12 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
   let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+   // location
+  listing.geometry = await getCoordinates(
+    req.body.listing.location,
+    req.body.listing.country
+  );
 
   if (typeof req.file !== "undefined") {
     let url = req.file.path;

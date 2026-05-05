@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
+// const Listing = require("./models/listing.js");
 const express = require("express");
 const app = express();
 const session = require("express-session");
@@ -50,7 +51,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl = process.env.ATLAS_URL || "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLAS_URL || 8080;
 
 main()
   .then((res) => {
@@ -78,6 +79,21 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRoute);
+// Update listings 
+// app.get("/fix-listings", async (req, res) => {
+//   const listings = await Listing.find({});  // all listing
+  
+//   for (let listing of listings) {
+//     const response = await fetch(
+//       `https://api.geoapify.com/v1/geocode/search?text=${listing.location},${listing.country}&apiKey=${process.env.MAP_TOKEN}`
+//     );
+//     const data = await response.json();
+//     listing.geometry = data.features[0].geometry;
+//     await listing.save();
+//   }
+  
+//   res.send("All listings updated!");
+// });
 
 // Reviews / comments Post Route
 
@@ -94,4 +110,21 @@ app.use((err, req, res, next) => {
 
 app.listen(8080, (req, res) => {
   console.log("server is listen to port 8080");
+});
+
+// Update listings 
+// app.js mein temporarily add karo
+app.get("/fix-listings", async (req, res) => {
+  const listings = await Listing.find({ geometry: { $exists: false } });
+  
+  for (let listing of listings) {
+    const response = await fetch(
+      `https://api.geoapify.com/v1/geocode/search?text=${listing.location},${listing.country}&apiKey=${process.env.MAP_TOKEN}`
+    );
+    const data = await response.json();
+    listing.geometry = data.features[0].geometry;
+    await listing.save();
+  }
+  
+  res.send("All listings updated!");
 });

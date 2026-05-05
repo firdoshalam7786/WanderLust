@@ -10,24 +10,33 @@ const listingSchema = new Schema({
   description: String,
   image: {
     url: String,
-    filename: String
+    filename: String,
   },
   price: Number,
   location: String,
   country: String,
+
+  geometry: {
+    type: { type: String, enum: ["Point"], default: "Point" },
+    coordinates:{
+      type:[Number],// [longitude, latitude]
+      default:[0,0]    
+    }
+  },
+
   reviews: [
     {
       type: Schema.Types.ObjectId,
       ref: "Review",
     },
   ],
-  owner:{
+  owner: {
     type: Schema.Types.ObjectId,
-    ref: "User"
-  }
+    ref: "User",
+  },
 });
 
-// listing ka pura data delete krne ka post route
+// POST route to delete all listing data.
 listingSchema.post("findOneAndDelete", async (listing) => {
   if (listing) {
     await Review.deleteMany({ _id: { $in: listing.reviews } });
