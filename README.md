@@ -35,11 +35,16 @@ It is inspired by platforms like Airbnb and built to understand real-world web d
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 WonderLust/
 ├── models/
+│   ├── listing.js
+│   ├── user.js
+│   └── review.js
+│
+├── controllers/
 │   ├── listing.js
 │   ├── user.js
 │   └── review.js
@@ -62,19 +67,22 @@ WonderLust/
 │   ├── users/
 │   │   ├── signup.ejs
 │   │   └── login.ejs
-│   │
+│   │   └── error.ejs
 │   └── includes/
 │       ├── navbar.ejs
 │       └── footer.ejs
-│
+│       └── flash.ejs
 ├── public/
 │   ├── css/
 │   ├── js/
-│   └── images/
 │
 ├── init/
 │   ├── data.js
 │   └── index.js
+│
+├── utility/
+│   ├── ExpressError.js
+│   └── wrapAsync.js
 │
 ├── middleware.js
 ├── app.js
