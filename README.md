@@ -1,4 +1,4 @@
-# Wanderlust Project 🌍
+# Wanderlust Project
 
 A full-stack web application built using:
 - Node.js
@@ -16,4 +16,5 @@ A full-stack web application built using:
 1. Clone repo
 2. Run `npm install`
 3. Add `.env` file
-4. Run `node app.js`
+4. Run `npm run dev`
+5 Run `npm start`
