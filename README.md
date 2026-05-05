@@ -29,9 +29,9 @@ It is inspired by platforms like Airbnb and built to understand real-world web d
 * **Backend:** Node.js, Express.js
 * **Frontend:** EJS, Bootstrap, CSS
 * **Database:** MongoDB, Mongoose
-* **Authentication:** Passport.js, Express Session
+* **Authentication:** Passport.js, Express Session,passport-local-mongoose
 * **Image Upload:** Cloudinary, Multer
-* **Maps:** Mapbox / Leaflet
+* **Maps:** Geoapify
 
 ---
 
