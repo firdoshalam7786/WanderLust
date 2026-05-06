@@ -28,15 +28,14 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.set("trust proxy", 1);
-
 const sessionOptions = {
   secret: process.env.SECRET,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
-    secure: process.env.NODE_ENV === "production",
-    httpOnly: true,
+    expire: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
   },
 };
 app.use(session(sessionOptions));
@@ -97,19 +96,19 @@ app.listen(8080, (req, res) => {
   console.log("server is listen to port 8080");
 });
 
-// Update listings
+// Update listings 
 // app.js mein temporarily add karo
 app.get("/fix-listings", async (req, res) => {
   const listings = await Listing.find({ geometry: { $exists: false } });
-
+  
   for (let listing of listings) {
     const response = await fetch(
-      `https://api.geoapify.com/v1/geocode/search?text=${listing.location},${listing.country}&apiKey=${process.env.MAP_TOKEN}`,
+      `https://api.geoapify.com/v1/geocode/search?text=${listing.location},${listing.country}&apiKey=${process.env.MAP_TOKEN}`
     );
     const data = await response.json();
     listing.geometry = data.features[0].geometry;
     await listing.save();
   }
-
+  
   res.send("All listings updated!");
 });
