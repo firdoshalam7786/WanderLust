@@ -27,9 +27,8 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-app.set("trust proxy", 1);
 const sessionOptions = {
-  secret: process.env.SECRET,
+  secret: "mysupersecretcode",
   resave: false,
   saveUninitialized: true,
   cookie: {
