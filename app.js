@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
-// const Listing = require("./models/listing.js");
 const express = require("express");
 const app = express();
 const session = require("express-session");
@@ -79,21 +78,6 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRoute);
-// Update listings 
-// app.get("/fix-listings", async (req, res) => {
-//   const listings = await Listing.find({});  // all listing
-  
-//   for (let listing of listings) {
-//     const response = await fetch(
-//       `https://api.geoapify.com/v1/geocode/search?text=${listing.location},${listing.country}&apiKey=${process.env.MAP_TOKEN}`
-//     );
-//     const data = await response.json();
-//     listing.geometry = data.features[0].geometry;
-//     await listing.save();
-//   }
-  
-//   res.send("All listings updated!");
-// });
 
 // Reviews / comments Post Route
 
