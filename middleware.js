@@ -12,7 +12,7 @@ module.exports.isLoggedIn = (req, res, next) => {
   next();
 };
 
-// url save krvane ka middleware
+// Save Url (middleware)
 module.exports.saveRedirect = (req, res, next) => {
   if (req.session.redirectUrl) {
     res.locals.redirectUrl = req.session.redirectUrl;

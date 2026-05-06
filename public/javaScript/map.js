@@ -8,7 +8,7 @@ var map = L.map("my-map").setView([lat, lng], 12);
 
 var isRetina = L.Browser.retina;
 
-// YAHAN apiKey URL mein directly daalo — {apiKey} placeholder mat use karo
+// api direct insert to Url
 var baseUrl = `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=${myAPIKey}`;
 var retinaUrl = `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey=${myAPIKey}`;
 
