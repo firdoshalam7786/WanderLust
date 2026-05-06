@@ -50,7 +50,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl = process.env.ATLAS_URL || 8080;
+const dbUrl = process.env.ATLAS_URL;
 
 main()
   .then((res) => {
@@ -75,6 +75,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRoute);
@@ -87,12 +91,14 @@ app.use((req, res, next) => {
   next(new ExpressError(404, "Page not found!"));
 });
 
+//Error handler
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong!" } = err;
   res.status(statusCode).render("error.ejs", { message });
 });
+const port = process.env.PORT || 8080;
 
-app.listen(8080, (req, res) => {
+app.listen(port, () => {
   console.log("server is listen to port 8080");
 });
 

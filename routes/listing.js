@@ -15,8 +15,8 @@ router.route("/")
 // 5. create route
 .post(
   isLoggedIn,
-  validateListing,
   upload.single("listing[image]"),
+  validateListing,
   wrapAsync(listingController.createListing)
 );
 
@@ -48,8 +48,8 @@ router.route("/:id")
 //6. Edit Route
 router.get(
   "/:id/edit",
-  isOwner,
   isLoggedIn,
+  isOwner,
   wrapAsync(listingController.renderEditForm)
 );
 
