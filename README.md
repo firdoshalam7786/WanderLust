@@ -1,13 +1,12 @@
 #  WonderLust
 
-WonderLust is a full-stack web application where users can explore, create, and review rental properties.
-It is inspired by platforms like Airbnb and built to understand real-world web development concepts.
+WonderLust is a full‑stack rental property web app inspired by Airbnb. It lets users browse and explore listings, create and manage their own properties, upload photos, and share reviews about their stays.
 
 ---
 
 ##  Live Demo
 
-🔗 https://your-deployed-link.onrender.com
+🔗 https://wanderlust-5bf3.onrender.com
 
 ---
 
